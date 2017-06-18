@@ -1,0 +1,120 @@
+
+
+/*--------------------------------------------------------------*/
+/* Webfont Icons selector
+/*--------------------------------------------------------------*/
+.dilaz-mb-webfont-icons {
+	background: #fff;
+	height: 132px;
+	padding: 1px;
+	border: 1px solid #ddd;
+	cursor: pointer;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	display: block;
+}
+.dilaz-mb-webfont-icons [class^="fa-"],
+.dilaz-mb-webfont-icons [class*=" fa-"],
+.dilaz-mb-webfont-icons [class^="mdi-"],
+.dilaz-mb-webfont-icons [class*=" mdi-"],
+.dilaz-mb-webfont-icons [class^="fi-"],
+.dilaz-mb-webfont-icons [class*=" fi-"],
+.dilaz-mb-webfont-icons [class^="icon-arrows-"],
+.dilaz-mb-webfont-icons [class*=" icon-arrows-"],
+.dilaz-mb-webfont-icons [class^="icon-basic-"],
+.dilaz-mb-webfont-icons [class*=" icon-basic-"],
+.dilaz-mb-webfont-icons [class^="icon-basic-elaboration-"],
+.dilaz-mb-webfont-icons [class*=" icon-basic-elaboration-"],
+.dilaz-mb-webfont-icons [class^="icon-ecommerce-"],
+.dilaz-mb-webfont-icons [class*=" icon-ecommerce-"],
+.dilaz-mb-webfont-icons [class^="icon-music-"],
+.dilaz-mb-webfont-icons [class*=" icon-music-"],
+.dilaz-mb-webfont-icons [class^="icon-software-"],
+.dilaz-mb-webfont-icons [class*=" icon-software-"],
+.dilaz-mb-webfont-icons [class^="icon-weather-"],
+.dilaz-mb-webfont-icons [class*=" icon-weather-"]{
+	margin: 1px;
+	display: inline-block;
+	background: #f9f9f9;
+	color: #555;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 18px;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	border: 1px solid #e1e1e1;
+	cursor: pointer;
+	-webkit-font-smoothing: antialiased;
+		-webkit-transition: all 0.1s ease-in-out 0s;
+		   -moz-transition: all 0.1s ease-in-out 0s;
+			-ms-transition: all 0.1s ease-in-out 0s;
+			 -o-transition: all 0.1s ease-in-out 0s;
+				transition: all 0.1s ease-in-out 0s;
+}
+.dilaz-mb-webfont-icons [class^="fa-"]:hover,
+.dilaz-mb-webfont-icons [class*=" fa-"]:hover,
+.dilaz-mb-webfont-icons [class^="mdi-"]:hover,
+.dilaz-mb-webfont-icons [class*=" mdi-"]:hover,
+.dilaz-mb-webfont-icons [class^="fi-"]:hover,
+.dilaz-mb-webfont-icons [class*=" fi-"]:hover,
+.dilaz-mb-webfont-icons [class^="icon-arrows-"]:hover,
+.dilaz-mb-webfont-icons [class*=" icon-arrows-"]:hover,
+.dilaz-mb-webfont-icons [class^="icon-basic-"]:hover,
+.dilaz-mb-webfont-icons [class*=" icon-basic-"]:hover,
+.dilaz-mb-webfont-icons [class^="icon-basic-elaboration-"]:hover,
+.dilaz-mb-webfont-icons [class*=" icon-basic-elaboration-"]:hover,
+.dilaz-mb-webfont-icons [class^="icon-ecommerce-"]:hover,
+.dilaz-mb-webfont-icons [class*=" icon-ecommerce-"]:hover,
+.dilaz-mb-webfont-icons [class^="icon-music-"]:hover,
+.dilaz-mb-webfont-icons [class*=" icon-music-"]:hover,
+.dilaz-mb-webfont-icons [class^="icon-software-"]:hover,
+.dilaz-mb-webfont-icons [class*=" icon-software-"]:hover,
+.dilaz-mb-webfont-icons [class^="icon-weather-"]:hover,
+.dilaz-mb-webfont-icons [class*=" icon-weather-"]:hover {
+	background-color: #fff;
+	color: #000;
+	-webkit-transform: scale(1.5);
+	   -moz-transform: scale(1.5);
+		 -o-transform: scale(1.5);
+			transform: scale(1.5);
+}
+.dilaz-mb-webfont-icons [class^="fa-"].active,
+.dilaz-mb-webfont-icons [class*=" fa-"].active,
+.dilaz-mb-webfont-icons [class^="mdi-"].active,
+.dilaz-mb-webfont-icons [class*=" mdi-"].active,
+.dilaz-mb-webfont-icons [class^="fi-"].active,
+.dilaz-mb-webfont-icons [class*=" fi-"].active,
+.dilaz-mb-webfont-icons [class^="icon-arrows-"].active,
+.dilaz-mb-webfont-icons [class*=" icon-arrows-"].active,
+.dilaz-mb-webfont-icons [class^="icon-basic-"].active,
+.dilaz-mb-webfont-icons [class*=" icon-basic-"].active,
+.dilaz-mb-webfont-icons [class^="icon-basic-elaboration-"].active,
+.dilaz-mb-webfont-icons [class*=" icon-basic-elaboration-"].active,
+.dilaz-mb-webfont-icons [class^="icon-ecommerce-"].active,
+.dilaz-mb-webfont-icons [class*=" icon-ecommerce-"].active,
+.dilaz-mb-webfont-icons [class^="icon-music-"].active,
+.dilaz-mb-webfont-icons [class*=" icon-music-"].active,
+.dilaz-mb-webfont-icons [class^="icon-software-"].active,
+.dilaz-mb-webfont-icons [class*=" icon-software-"].active,
+.dilaz-mb-webfont-icons [class^="icon-weather-"].active,
+.dilaz-mb-webfont-icons [class*=" icon-weather-"].active {
+	background-color: #8BC34A;
+	color: #fff;
+	border: 1px solid #8BC34A;
+}
+#dilaz-mb-webfont-search {
+	display: inline-block
+}
+.dilaz-mb-webfont-search {
+	margin: 0 0 2px;
+}
+.dilaz-mb-webfont-show-all, 
+.dilaz-mb-webfont-show-less {
+	float: right;
+	margin-left: 5px;
+} 
+.dilaz-mb-webfont-show-less {
+	display: none
+}
