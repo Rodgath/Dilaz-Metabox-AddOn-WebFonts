@@ -1,2 +1,3 @@
-# Dilaz-Metaboxes---WebFonts-AddOn-
-Webfont fields addon fro Dilaz Metaboxes
+# Dilaz Metaboxes - WebFonts AddOn
+Webfont fields addon for Dilaz Metaboxes.
+
