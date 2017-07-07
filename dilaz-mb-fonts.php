@@ -1,11 +1,13 @@
 <?php
 /*
-Plugin Name: Dilaz Metabox Fonts
-Plugin URI: http://webdilaz.com/addons/dilaz-metabox-fonts/
-Description: Extends dilaz metaboxes fonts
-Author: WebDilaz Team
-Version: 1.0
-Author URI: http://webdilaz.com/
+ * Plugin Name:	Dilaz Metabox Fonts
+ * Plugin URI:	http://webdilaz.com/addons/dilaz-metabox-fonts/
+ * Description:	Webfonts for Dilaz Metaboxes. (Icons by Fontawesome, MaterialDesign, Foundation and Linea)
+ * Author:		WebDilaz Team
+ * Version:		1.0
+ * Author URI:	http://webdilaz.com/
+ * License:		GPL-2.0+
+ * License URI:	http://www.gnu.org/licenses/gpl-2.0.txt
 */
 
 defined('ABSPATH') || exit;
@@ -127,7 +129,7 @@ if ( !function_exists('dilaz_mb_webfont_details') ) {
 				break;
 				
 			case $font: 
-				$font_details = apply_filters('dilaz_mb_webfont_details_'. $font .'_action'); // add custom webfont via this hook
+				$font_details = apply_filters('dilaz_mb_webfont_details_'. $font .'_hook'); // add custom webfont via this hook
 				$font_file    = $font_details[0];
 				$font_prefix  = $font_details[1];
 				break;
@@ -209,7 +211,7 @@ if ( !function_exists('dilaz_mb_font_class') ) {
 			case 'linea-music'             : $font_class = 'icon-music'; break;
 			case 'linea-software'          : $font_class = 'icon-software'; break;
 			case 'linea-weather'           : $font_class = 'icon-weather'; break;
-			case $font                     : $font_class = apply_filters('dilaz_mb_font_class_'. $font .'_action'); break; // add custom font class via this hook
+			case $font                     : $font_class = apply_filters('dilaz_mb_font_class_'. $font .'_hook'); break; // add custom font class via this hook
 			default                        : $font_class = ''; break;
 		}
 
@@ -263,8 +265,8 @@ if (!function_exists('dilaz_mb_field_webfont')) {
  *
  * @return	array
  */
-add_action('dilaz_mb_field_webfont_action', 'dilaz_mb_field_webfont_action', 99, 1);
-function dilaz_mb_field_webfont_action($field) {
+add_action('dilaz_mb_field_webfont_hook', 'dilaz_mb_field_webfont_hook', 99, 1);
+function dilaz_mb_field_webfont_hook($field) {
 	echo dilaz_mb_field_webfont($field);
 }
 
@@ -415,7 +417,7 @@ function dilaz_insert_webfont_option_fields($dilaz_meta_boxes) {
 		# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		$dilaz_font_metaboxes[] = array(
 			'id'	  => DILAZ_MB_PREFIX .'linea-weather',
-			'name'	  => __('Choose Icon (Linea Weather Icons):', 'dilaz-mb-fonts'),
+			'name'	  => __('Choose Icon (Linea Weather):', 'dilaz-mb-fonts'),
 			'desc'	  => '',
 			'type'	  => 'webfont',
 			'options' => dilaz_mb_webfont_icons(array('linea-weather')),
@@ -437,7 +439,7 @@ function dilaz_insert_webfont_option_fields($dilaz_meta_boxes) {
  *
  * @return	mixed|string|bool
  */
-add_filter('dilaz_mb_sanitize_field_webfont_action', 'dilaz_mb_sanitize_field_webfont_action', 99, 2);
-function dilaz_mb_sanitize_field_webfont_action($input, $field) {
-	return $input;
+add_filter('dilaz_mb_sanitize_field_webfont_hook', 'dilaz_mb_sanitize_field_webfont_hook', 99, 2);
+function dilaz_mb_sanitize_field_webfont_hook($input, $field) {
+	return sanitize_text_field($input);
 }
