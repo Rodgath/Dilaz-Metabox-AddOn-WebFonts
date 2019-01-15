@@ -1,4 +1,4 @@
-# WebFonts AddOn for Dilaz Metabox
+# WebFonts AddOn for *```Dilaz Metabox```*
 Webfont fields addon for Dilaz Metabox plugin.
 
 ## Supported Webfonts
