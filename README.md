@@ -1,5 +1,5 @@
-# Dilaz Metaboxes - WebFonts AddOn
-Webfont fields addon for Dilaz Metaboxes.
+# WebFonts AddOn for Dilaz Metabox
+Webfont fields addon for Dilaz Metabox plugin.
 
 ## Supported Webfonts
 * [Fontawesome Icons](http://fontawesome.io/icons/)
