@@ -4,7 +4,7 @@
  * Plugin URI:	http://webdilaz.com/addons/dilaz-metabox-fonts/
  * Description:	Webfonts for Dilaz Metaboxes. (Icons by Fontawesome, MaterialDesign, Foundation and Linea)
  * Author:		WebDilaz Team
- * Version:		1.0
+ * Version:		2.0
  * Author URI:	http://webdilaz.com/
  * License:		GPL-2.0+
  * License URI:	http://www.gnu.org/licenses/gpl-2.0.txt
@@ -13,68 +13,123 @@
 defined('ABSPATH') || exit;
 
 
-# Set constant path to the plugin directory
-define('DILAZ_MB_FONTS_DIR', trailingslashit(plugin_dir_path(__FILE__)));
-define('DILAZ_MB_FONTS_URL', trailingslashit(plugin_dir_url(__FILE__)));
-
-
-/**
- * Enqueue webfont styles and scripts
- *
- * @return array
- */
-add_action('dilaz_mb_before_main_style_enqueue', 'dilaz_mb_webfonts_enqueue_scripts', 1);
-function dilaz_mb_webfonts_enqueue_scripts($dilaz_meta_boxes) {
+class DilazMetaboxFonts {
 	
-	$meta_box_class = new Dilaz_Meta_Box($dilaz_meta_boxes);
 	
-	# Webfont styles
-	if ($meta_box_class->has_field('webfont')) {
-		if ($meta_box_class->has_field_arg('fonts', 'materialdesign'))
-			wp_enqueue_style('mdi', DILAZ_MB_FONTS_URL .'assets/css/materialdesignicons.css', false, '1.1');
+	/**
+	 * Metabox prefix
+	 *
+	 * @var string
+	 * @since 2.0
+	 */
+	protected $prefix;
+	
+	
+	/**
+	 * Contructor method
+	 *
+	 * @since 2.0
+	 */
+	function __construct() {
 		
-		if ($meta_box_class->has_field_arg('fonts', 'foundation'))
-			wp_enqueue_style('fi', DILAZ_MB_FONTS_URL .'assets/css/foundation-icons.css', false, '3.0');
+		$this->prefix = array('my_prefix_');
+		add_action('init', array($this, 'webfont_init'));
 		
-		if ($meta_box_class->has_field_arg('fonts', 'linea-arrows'))
-			wp_enqueue_style('linea-arrows', DILAZ_MB_FONTS_URL .'assets/css/linea-arrows-icons.css', false, '1.0');
-		
-		if ($meta_box_class->has_field_arg('fonts', 'linea-basic'))
-			wp_enqueue_style('linea-basic', DILAZ_MB_FONTS_URL .'assets/css/linea-basic-icons.css', false, '1.0');
-		
-		if ($meta_box_class->has_field_arg('fonts', 'linea-basic-elaboration'))
-			wp_enqueue_style('linea-basic-elaboration', DILAZ_MB_FONTS_URL .'assets/css/linea-basic-elaboration-icons.css', false, '1.0');
-		
-		if ($meta_box_class->has_field_arg('fonts', 'linea-ecommerce'))
-			wp_enqueue_style('linea-ecommerce', DILAZ_MB_FONTS_URL .'assets/css/linea-ecommerce-icons.css', false, '1.0');
-		
-		if ($meta_box_class->has_field_arg('fonts', 'linea-music'))
-			wp_enqueue_style('linea-music', DILAZ_MB_FONTS_URL .'assets/css/linea-music-icons.css', false, '1.0');
-		
-		if ($meta_box_class->has_field_arg('fonts', 'linea-software'))
-			wp_enqueue_style('linea-software', DILAZ_MB_FONTS_URL .'assets/css/linea-software-icons.css', false, '1.0');
-		
-		if ($meta_box_class->has_field_arg('fonts', 'linea-weather'))
-			wp_enqueue_style('linea-weather', DILAZ_MB_FONTS_URL .'assets/css/linea-weather-icons.css', false, '1.0');
-		
-		wp_enqueue_style('dilaz-mb-webfont-style', DILAZ_MB_FONTS_URL .'assets/css/style.css', false, '1.0');
-		
-		wp_enqueue_script('dilaz-mb-webfont-script', DILAZ_MB_FONTS_URL .'assets/js/scripts.js', array('dilaz-mb-script'), '', true);
 	}
-}
+	
+	
+	/**
+	 * Initialization
+	 *
+	 * @since 2.0
+	 */
+	public function webfont_init() {
+		
+		$this->constants();
+		
+		add_action('dilaz_mb_before_main_style_enqueue', array($this, 'enqueue_scripts'), 10, 2);
+		add_action('dilaz_mb_field_webfont_hook', array($this, 'register_webfont_field'), 99, 1);
+		add_filter('dilaz_meta_box_filter', array($this, 'insert_webfont_fields'), 99, 2);
+		add_filter('dilaz_mb_sanitize_field_webfont_hook', array($this, 'sanitize_webfont_field'), 99, 2);
+	
+	}
+	
+	
+	/**
+	 * Constants
+	 *
+	 * @since 2.0
+	 */
+	public function constants() {
+		
+		# Set constant path to the plugin directory
+		define('DILAZ_MB_FONTS_DIR', trailingslashit(plugin_dir_path(__FILE__)));
+		define('DILAZ_MB_FONTS_URL', trailingslashit(plugin_dir_url(__FILE__)));
+	
+	}
+	
+	
+	/**
+	 * Enqueue webfont styles and scripts
+	 *
+	 * @param array	$dilaz_metaboxes all registered dilaz metaboxes
+	 * @param array	$prefix          metabox prefix
+	 *
+	 * @return array
+	 */
+	function enqueue_scripts($prefix, $dilaz_meta_boxes) {
+		
+		if (isset($this->prefix) and in_array($prefix, $this->prefix)) {
 
-
-/**
- * Get Webfont File Name and Font Prefix
- *
- * @since 1.0
- *
- * @param array  $font - font name
- *
- * @return array
- */
-if ( !function_exists('dilaz_mb_webfont_details') ) {
-	function dilaz_mb_webfont_details($font) {
+			$meta_box_class = new Dilaz_Meta_Box($prefix, $dilaz_meta_boxes);
+			
+			# Webfont styles
+			if ($meta_box_class->has_field('webfont')) {
+				if ($meta_box_class->has_field_arg('fonts', 'materialdesign'))
+					wp_enqueue_style('mdi', DILAZ_MB_FONTS_URL .'assets/css/materialdesignicons.css', false, '1.1');
+				
+				if ($meta_box_class->has_field_arg('fonts', 'foundation'))
+					wp_enqueue_style('fi', DILAZ_MB_FONTS_URL .'assets/css/foundation-icons.css', false, '3.0');
+				
+				if ($meta_box_class->has_field_arg('fonts', 'linea-arrows'))
+					wp_enqueue_style('linea-arrows', DILAZ_MB_FONTS_URL .'assets/css/linea-arrows-icons.css', false, '1.0');
+				
+				if ($meta_box_class->has_field_arg('fonts', 'linea-basic'))
+					wp_enqueue_style('linea-basic', DILAZ_MB_FONTS_URL .'assets/css/linea-basic-icons.css', false, '1.0');
+				
+				if ($meta_box_class->has_field_arg('fonts', 'linea-basic-elaboration'))
+					wp_enqueue_style('linea-basic-elaboration', DILAZ_MB_FONTS_URL .'assets/css/linea-basic-elaboration-icons.css', false, '1.0');
+				
+				if ($meta_box_class->has_field_arg('fonts', 'linea-ecommerce'))
+					wp_enqueue_style('linea-ecommerce', DILAZ_MB_FONTS_URL .'assets/css/linea-ecommerce-icons.css', false, '1.0');
+				
+				if ($meta_box_class->has_field_arg('fonts', 'linea-music'))
+					wp_enqueue_style('linea-music', DILAZ_MB_FONTS_URL .'assets/css/linea-music-icons.css', false, '1.0');
+				
+				if ($meta_box_class->has_field_arg('fonts', 'linea-software'))
+					wp_enqueue_style('linea-software', DILAZ_MB_FONTS_URL .'assets/css/linea-software-icons.css', false, '1.0');
+				
+				if ($meta_box_class->has_field_arg('fonts', 'linea-weather'))
+					wp_enqueue_style('linea-weather', DILAZ_MB_FONTS_URL .'assets/css/linea-weather-icons.css', false, '1.0');
+				
+				wp_enqueue_style('dilaz-mb-webfont-style', DILAZ_MB_FONTS_URL .'assets/css/style.css', false, '1.0');
+				
+				wp_enqueue_script('dilaz-mb-webfont-script', DILAZ_MB_FONTS_URL .'assets/js/scripts.js', array('dilaz-mb-script'), '', true);
+			}
+		}
+	}
+	
+	
+	/**
+	 * Get Webfont File Name and Font Prefix
+	 *
+	 * @since 1.0
+	 *
+	 * @param array $font font name
+	 *
+	 * @return array
+	 */
+	function webfont_details($font) {
 		
 		switch ($font) {
 			
@@ -142,20 +197,18 @@ if ( !function_exists('dilaz_mb_webfont_details') ) {
 		
 		return array($font_file, $font_prefix);
 	}
-}
-
-
-/**
- * Get Webfont Icons
- *
- * @since 1.0
- *
- * @param array  $fonts - selected fonts
- *
- * @return array
- */
-if ( !function_exists('dilaz_mb_webfont_icons') ) {
-	function dilaz_mb_webfont_icons($fonts) {
+	
+	
+	/**
+	 * Get Webfont Icons
+	 *
+	 * @since 1.0
+	 *
+	 * @param array $fonts selected fonts
+	 *
+	 * @return array
+	 */
+	function webfont_icons($fonts) {
 		
 		$font_file   = '';
 		$font_prefix = '';
@@ -164,7 +217,7 @@ if ( !function_exists('dilaz_mb_webfont_icons') ) {
 		foreach ($fonts as $font) {
 			
 			# font details
-			$font_details = dilaz_mb_webfont_details($font);
+			$font_details = $this->webfont_details($font);
 			$font_file    = $font_details[0];
 			$font_prefix  = $font_details[1];
 			
@@ -183,20 +236,18 @@ if ( !function_exists('dilaz_mb_webfont_icons') ) {
 		
 		return $icons;
 	}
-}
-
-
-/**
- * Get font class
- *
- * @since 1.0
- *
- * @param string  $font - font name
- *
- * @return string|boolean default:false
- */
-if ( !function_exists('dilaz_mb_font_class') ) {
-	function dilaz_mb_font_class($font) {
+	
+	
+	/**
+	 * Get font class
+	 *
+	 * @since 1.0
+	 *
+	 * @param string $font font name
+	 *
+	 * @return string|boolean default:false
+	 */
+	function font_class($font) {
 		
 		if (empty($font)) return false;
 		
@@ -217,18 +268,16 @@ if ( !function_exists('dilaz_mb_font_class') ) {
 
 		return $font_class;
 	}
-}
-
-
-/**
- * Webfont Icons Field
- *
- * @param	string	$field - field object
- *
- * @return	mixed
- */
-if (!function_exists('dilaz_mb_field_webfont')) {
-	function dilaz_mb_field_webfont($field) {
+	
+	
+	/**
+	 * Webfont Icons Field
+	 *
+	 * @param string $field field object
+	 *
+	 * @return mixed
+	 */
+	function webfont_field($field) {
 		
 		global $post;
 		
@@ -243,7 +292,7 @@ if (!function_exists('dilaz_mb_field_webfont')) {
 		foreach ( (array)$options as $font => $font_data ) {
 			foreach ((array)$font_data as $value => $option) {
 				$active     = $meta == $value ? 'active' : '';
-				$font_class = dilaz_mb_font_class($font);
+				$font_class = $this->font_class($font);
 				$output .= '<span><i class="'. $font_class .' '. $value .' '. $active .'" data-name="'. $value .'"></i></span>';
 			}
 		}
@@ -255,191 +304,194 @@ if (!function_exists('dilaz_mb_field_webfont')) {
 		
 		echo $output;
 	}
+	
+	
+	/**
+	 * Register webfont field
+	 *
+	 * @param string $field field object
+	 *
+	 * @return array
+	 */
+	function register_webfont_field($field) {
+		echo $this->webfont_field($field);
+	}
+
+
+	/**
+	 * Insert metabox field before a specific field
+	 *
+	 * @param array	$dilaz_metaboxes all registered dilaz metaboxes
+	 * @param array	$prefix          metabox prefix
+	 *
+	 * @return array
+	 */
+	function insert_webfont_fields($dilaz_meta_boxes, $prefix) {
+		
+		# insert only in required metabox options
+		if (!in_array($prefix, $this->prefix)) return;
+		
+		# array data to be inserted
+		$dilaz_font_metaboxes = [];
+		
+		# TAB - Webfonts Options Set
+		# *****************************************************************************************
+		$dilaz_font_metaboxes[] = array(
+			'id'    => $prefix .'webfonts',
+			'title' => __('Webfonts', 'dilaz-mb-fonts'),
+			'icon'  => 'fa-font',
+			'type'  => 'metabox_tab'
+		);
+			
+			# FIELDS - Specific Webfonts Field
+			# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			$dilaz_font_metaboxes[] = array(
+				'id'	  => $prefix .'webfonts',
+				'name'	  => __('Choose Icon (Specific Webfonts Only):', 'dilaz-mb-fonts'),
+				'desc'	  => __('This example shows three fonts combined: Font Awesome, Material Design Icons and Linea Arrows.:', 'dilaz-mb-fonts'),
+				'type'	  => 'webfont',
+				'options' => $this->webfont_icons(array('fontawesome', 'materialdesign', 'linea-arrows')),
+				'std'     => 'default',
+				'args'    => array('fonts' => array('fontawesome', 'materialdesign', 'linea-arrows')),
+			);
+			
+			# FIELDS - Font Awesome Field
+			# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			$dilaz_font_metaboxes[] = array(
+				'id'	  => $prefix .'fa',
+				'name'	  => __('Choose Icon (Font Awesome Icons):', 'dilaz-mb-fonts'),
+				'desc'	  => '',
+				'type'	  => 'webfont',
+				'options' => $this->webfont_icons(array('fontawesome')),
+				'std'     => 'default',
+				'args'    => array('fonts' => array('fontawesome')),
+			);
+			
+			# FIELDS - Material Design Icons Field
+			# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			$dilaz_font_metaboxes[] = array(
+				'id'	  => $prefix .'mdi',
+				'name'	  => __('Choose Icon (Material Design Icons):', 'dilaz-mb-fonts'),
+				'desc'	  => '',
+				'type'	  => 'webfont',
+				'options' => $this->webfont_icons(array('materialdesign')),
+				'std'     => 'default',
+				'args'    => array('fonts' => array('materialdesign')),
+			);
+			
+			# FIELDS - Foundation Icons Field
+			# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			$dilaz_font_metaboxes[] = array(
+				'id'	  => $prefix .'fi',
+				'name'	  => __('Choose Icon (Foundation Icons):', 'dilaz-mb-fonts'),
+				'desc'	  => '',
+				'type'	  => 'webfont',
+				'options' => $this->webfont_icons(array('foundation')),
+				'std'     => 'default',
+				'args'    => array('fonts' => array('foundation')),
+			);
+			
+			# FIELDS - Linea Arrow Icons Field
+			# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			$dilaz_font_metaboxes[] = array(
+				'id'	  => $prefix .'linea-arrows',
+				'name'	  => __('Choose Icon (Linea Arrow Icons):', 'dilaz-mb-fonts'),
+				'desc'	  => '',
+				'type'	  => 'webfont',
+				'options' => $this->webfont_icons(array('linea-arrows')),
+				'std'     => 'default',
+				'args'    => array('fonts' => array('linea-arrows')),
+			);
+			
+			# FIELDS - Linea Basic Icons Field
+			# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			$dilaz_font_metaboxes[] = array(
+				'id'	  => $prefix .'linea-basic',
+				'name'	  => __('Choose Icon (Linea Basic Icons):', 'dilaz-mb-fonts'),
+				'desc'	  => '',
+				'type'	  => 'webfont',
+				'options' => $this->webfont_icons(array('linea-basic')),
+				'std'     => 'default',
+				'args'    => array('fonts' => array('linea-basic')),
+			);
+			
+			# FIELDS - Linea Basic Elaboration Icons Field
+			# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			$dilaz_font_metaboxes[] = array(
+				'id'	  => $prefix .'linea-basic-elaboration',
+				'name'	  => __('Choose Icon (Linea Basic Elaboration Icons):', 'dilaz-mb-fonts'),
+				'desc'	  => '',
+				'type'	  => 'webfont',
+				'options' => $this->webfont_icons(array('linea-basic-elaboration')),
+				'std'     => 'default',
+				'args'    => array('fonts' => array('linea-basic-elaboration')),
+			);
+			
+			# FIELDS - Linea eCommerce Icons Field
+			# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			$dilaz_font_metaboxes[] = array(
+				'id'	  => $prefix .'linea-ecommerce',
+				'name'	  => __('Choose Icon (Linea Ecommerce Icons):', 'dilaz-mb-fonts'),
+				'desc'	  => '',
+				'type'	  => 'webfont',
+				'options' => $this->webfont_icons(array('linea-ecommerce')),
+				'std'     => 'default',
+				'args'    => array('fonts' => array('linea-ecommerce')),
+			);
+			
+			# FIELDS - Linea Music Icons Field
+			# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			$dilaz_font_metaboxes[] = array(
+				'id'	  => $prefix .'linea-music',
+				'name'	  => __('Choose Icon (Linea Music Icons):', 'dilaz-mb-fonts'),
+				'desc'	  => '',
+				'type'	  => 'webfont',
+				'options' => $this->webfont_icons(array('linea-music')),
+				'std'     => 'default',
+				'args'    => array('fonts' => array('linea-music')),
+			);
+			
+			# FIELDS - Linea Software Icons Field
+			# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			$dilaz_font_metaboxes[] = array(
+				'id'	  => $prefix .'linea-software',
+				'name'	  => __('Choose Icon (Linea Software Icons):', 'dilaz-mb-fonts'),
+				'desc'	  => '',
+				'type'	  => 'webfont',
+				'options' => $this->webfont_icons(array('linea-software')),
+				'std'     => 'default',
+				'args'    => array('fonts' => array('linea-software')),
+			);
+			
+			# FIELDS - Linea Weather Icons Field
+			# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			$dilaz_font_metaboxes[] = array(
+				'id'	  => $prefix .'linea-weather',
+				'name'	  => __('Choose Icon (Linea Weather):', 'dilaz-mb-fonts'),
+				'desc'	  => '',
+				'type'	  => 'webfont',
+				'options' => $this->webfont_icons(array('linea-weather')),
+				'std'     => 'default',
+				'args'    => array('fonts' => array('linea-weather')),
+			);
+		
+		$new = DilazMetaboxFunction::insert_field($dilaz_meta_boxes, $prefix .'box-simple-fields', $prefix .'conditionals', $dilaz_font_metaboxes, 'last');
+		
+		return ($new != false) ? array_merge($dilaz_meta_boxes, $new) : $dilaz_meta_boxes;
+	}
+
+
+	/**
+	 * Sanitize webfont field
+	 *
+	 * @param mixed	$input field input value(s)
+	 * @param mixed	$field field object
+	 *
+	 * @return mixed|string|bool
+	 */
+	function sanitize_webfont_field($input, $field) {
+		return sanitize_text_field($input);
+	}
 }
 
-
-/**
- * Register webfont field
- *
- * @param	string	$field - field object
- *
- * @return	array
- */
-add_action('dilaz_mb_field_webfont_hook', 'dilaz_mb_field_webfont_hook', 99, 1);
-function dilaz_mb_field_webfont_hook($field) {
-	echo dilaz_mb_field_webfont($field);
-}
-
-
-/**
- * Insert metabox field before a specific field
- *
- * @param	array	$dilaz_metaboxes - all registered dilaz metaboxes
- *
- * @return	array
- */
-add_filter('dilaz_meta_boxes_filter', 'dilaz_insert_webfont_option_fields', 99, 1);
-function dilaz_insert_webfont_option_fields($dilaz_meta_boxes) {
-	
-	# array data to be inserted
-	$dilaz_font_metaboxes = [];
-	
-	# TAB - Webfonts Options Set
-	# *****************************************************************************************
-	$dilaz_font_metaboxes[] = array(
-		'id'    => DILAZ_MB_PREFIX .'webfonts',
-		'title' => __('Webfonts', 'dilaz-mb-fonts'),
-		'icon'  => 'fa-font',
-		'type'  => 'metabox_tab'
-	);
-		
-		# FIELDS - Specific Webfonts Field
-		# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		$dilaz_font_metaboxes[] = array(
-			'id'	  => DILAZ_MB_PREFIX .'webfonts',
-			'name'	  => __('Choose Icon (Specific Webfonts Only):', 'dilaz-mb-fonts'),
-			'desc'	  => __('This example shows three fonts combined: Font Awesome, Material Design Icons and Linea Arrows.:', 'dilaz-mb-fonts'),
-			'type'	  => 'webfont',
-			'options' => dilaz_mb_webfont_icons(array('fontawesome', 'materialdesign', 'linea-arrows')),
-			'std'     => 'default',
-			'args'    => array('fonts' => array('fontawesome', 'materialdesign', 'linea-arrows')),
-		);
-		
-		# FIELDS - Font Awesome Field
-		# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		$dilaz_font_metaboxes[] = array(
-			'id'	  => DILAZ_MB_PREFIX .'fa',
-			'name'	  => __('Choose Icon (Font Awesome Icons):', 'dilaz-mb-fonts'),
-			'desc'	  => '',
-			'type'	  => 'webfont',
-			'options' => dilaz_mb_webfont_icons(array('fontawesome')),
-			'std'     => 'default',
-			'args'    => array('fonts' => array('fontawesome')),
-		);
-		
-		# FIELDS - Material Design Icons Field
-		# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		$dilaz_font_metaboxes[] = array(
-			'id'	  => DILAZ_MB_PREFIX .'mdi',
-			'name'	  => __('Choose Icon (Material Design Icons):', 'dilaz-mb-fonts'),
-			'desc'	  => '',
-			'type'	  => 'webfont',
-			'options' => dilaz_mb_webfont_icons(array('materialdesign')),
-			'std'     => 'default',
-			'args'    => array('fonts' => array('materialdesign')),
-		);
-		
-		# FIELDS - Foundation Icons Field
-		# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		$dilaz_font_metaboxes[] = array(
-			'id'	  => DILAZ_MB_PREFIX .'fi',
-			'name'	  => __('Choose Icon (Foundation Icons):', 'dilaz-mb-fonts'),
-			'desc'	  => '',
-			'type'	  => 'webfont',
-			'options' => dilaz_mb_webfont_icons(array('foundation')),
-			'std'     => 'default',
-			'args'    => array('fonts' => array('foundation')),
-		);
-		
-		# FIELDS - Linea Arrow Icons Field
-		# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		$dilaz_font_metaboxes[] = array(
-			'id'	  => DILAZ_MB_PREFIX .'linea-arrows',
-			'name'	  => __('Choose Icon (Linea Arrow Icons):', 'dilaz-mb-fonts'),
-			'desc'	  => '',
-			'type'	  => 'webfont',
-			'options' => dilaz_mb_webfont_icons(array('linea-arrows')),
-			'std'     => 'default',
-			'args'    => array('fonts' => array('linea-arrows')),
-		);
-		
-		# FIELDS - Linea Basic Icons Field
-		# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		$dilaz_font_metaboxes[] = array(
-			'id'	  => DILAZ_MB_PREFIX .'linea-basic',
-			'name'	  => __('Choose Icon (Linea Basic Icons):', 'dilaz-mb-fonts'),
-			'desc'	  => '',
-			'type'	  => 'webfont',
-			'options' => dilaz_mb_webfont_icons(array('linea-basic')),
-			'std'     => 'default',
-			'args'    => array('fonts' => array('linea-basic')),
-		);
-		
-		# FIELDS - Linea Basic Elaboration Icons Field
-		# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		$dilaz_font_metaboxes[] = array(
-			'id'	  => DILAZ_MB_PREFIX .'linea-basic-elaboration',
-			'name'	  => __('Choose Icon (Linea Basic Elaboration Icons):', 'dilaz-mb-fonts'),
-			'desc'	  => '',
-			'type'	  => 'webfont',
-			'options' => dilaz_mb_webfont_icons(array('linea-basic-elaboration')),
-			'std'     => 'default',
-			'args'    => array('fonts' => array('linea-basic-elaboration')),
-		);
-		
-		# FIELDS - Linea eCommerce Icons Field
-		# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		$dilaz_font_metaboxes[] = array(
-			'id'	  => DILAZ_MB_PREFIX .'linea-ecommerce',
-			'name'	  => __('Choose Icon (Linea Ecommerce Icons):', 'dilaz-mb-fonts'),
-			'desc'	  => '',
-			'type'	  => 'webfont',
-			'options' => dilaz_mb_webfont_icons(array('linea-ecommerce')),
-			'std'     => 'default',
-			'args'    => array('fonts' => array('linea-ecommerce')),
-		);
-		
-		# FIELDS - Linea Music Icons Field
-		# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		$dilaz_font_metaboxes[] = array(
-			'id'	  => DILAZ_MB_PREFIX .'linea-music',
-			'name'	  => __('Choose Icon (Linea Music Icons):', 'dilaz-mb-fonts'),
-			'desc'	  => '',
-			'type'	  => 'webfont',
-			'options' => dilaz_mb_webfont_icons(array('linea-music')),
-			'std'     => 'default',
-			'args'    => array('fonts' => array('linea-music')),
-		);
-		
-		# FIELDS - Linea Software Icons Field
-		# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		$dilaz_font_metaboxes[] = array(
-			'id'	  => DILAZ_MB_PREFIX .'linea-software',
-			'name'	  => __('Choose Icon (Linea Software Icons):', 'dilaz-mb-fonts'),
-			'desc'	  => '',
-			'type'	  => 'webfont',
-			'options' => dilaz_mb_webfont_icons(array('linea-software')),
-			'std'     => 'default',
-			'args'    => array('fonts' => array('linea-software')),
-		);
-		
-		# FIELDS - Linea Weather Icons Field
-		# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		$dilaz_font_metaboxes[] = array(
-			'id'	  => DILAZ_MB_PREFIX .'linea-weather',
-			'name'	  => __('Choose Icon (Linea Weather):', 'dilaz-mb-fonts'),
-			'desc'	  => '',
-			'type'	  => 'webfont',
-			'options' => dilaz_mb_webfont_icons(array('linea-weather')),
-			'std'     => 'default',
-			'args'    => array('fonts' => array('linea-weather')),
-		);
-	
-	$new = dilaz_mb_insert_field($dilaz_meta_boxes, DILAZ_MB_PREFIX .'box-simple-fields', DILAZ_MB_PREFIX .'conditionals', $dilaz_font_metaboxes, 'last');
-	
-	return ($new != false) ? array_merge($dilaz_meta_boxes, $new) : $dilaz_meta_boxes;
-}
-
-
-/**
- * Sanitize webfont field
- *
- * @param	mixed	$input - field input value(s)
- * @param	mixed	$field - field object
- *
- * @return	mixed|string|bool
- */
-add_filter('dilaz_mb_sanitize_field_webfont_hook', 'dilaz_mb_sanitize_field_webfont_hook', 99, 2);
-function dilaz_mb_sanitize_field_webfont_hook($input, $field) {
-	return sanitize_text_field($input);
-}
+new DilazMetaboxFonts;
