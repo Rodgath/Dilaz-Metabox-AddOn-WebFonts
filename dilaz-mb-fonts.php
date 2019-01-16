@@ -4,7 +4,7 @@
  * Plugin URI:	http://webdilaz.com/addons/dilaz-metabox-fonts/
  * Description:	Webfonts for Dilaz Metaboxes. (Icons by Fontawesome, MaterialDesign, Foundation and Linea)
  * Author:		WebDilaz Team
- * Version:		2.0
+ * Version:		1.1
  * Author URI:	http://webdilaz.com/
  * License:		GPL-2.0+
  * License URI:	http://www.gnu.org/licenses/gpl-2.0.txt
