@@ -1,18 +1,20 @@
 <?php
 /*
- * Plugin Name:	Dilaz Metabox Fonts
- * Plugin URI:	http://webdilaz.com/addons/dilaz-metabox-fonts/
- * Description:	Webfonts for Dilaz Metaboxes. (Icons by Fontawesome, MaterialDesign, Foundation and Linea)
- * Author:		WebDilaz Team
- * Version:		1.1
- * Author URI:	http://webdilaz.com/
- * License:		GPL-2.0+
- * License URI:	http://www.gnu.org/licenses/gpl-2.0.txt
+ * Plugin Name: Dilaz Metabox Fonts
+ * Plugin URI:  http://webdilaz.com/addons/dilaz-metabox-fonts/
+ * Description: Webfonts for Dilaz Metabox plugin. Icons by Fontawesome, MaterialDesign, Foundation and Linea.
+ * Author:      WebDilaz Team
+ * Version:     1.2
+ * Author URI:  http://webdilaz.com/
+ * License:     GPL-2.0+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 */
 
 defined('ABSPATH') || exit;
 
-
+/**
+ * Webfonts class
+ */
 class DilazMetaboxFonts {
 	
 	
@@ -22,7 +24,7 @@ class DilazMetaboxFonts {
 	 * @var string
 	 * @since 2.0
 	 */
-	protected $prefix;
+	protected $prefixes;
 	
 	
 	/**
@@ -32,9 +34,8 @@ class DilazMetaboxFonts {
 	 */
 	function __construct() {
 		
-		$this->prefix = array('my_prefix_');
+		# init
 		add_action('init', array($this, 'webfont_init'));
-		
 	}
 	
 	
@@ -46,12 +47,12 @@ class DilazMetaboxFonts {
 	public function webfont_init() {
 		
 		$this->constants();
+		$this->prefixes();
 		
-		add_action('dilaz_mb_before_main_style_enqueue', array($this, 'enqueue_scripts'), 10, 2);
+		add_action('dilaz_mb_before_main_style_enqueue', array($this, 'enqueue_scripts'), 10, 3);
 		add_action('dilaz_mb_field_webfont_hook', array($this, 'register_webfont_field'), 99, 1);
-		add_filter('dilaz_meta_box_filter', array($this, 'insert_webfont_fields'), 99, 2);
+		add_filter('dilaz_meta_box_filter', array($this, 'insert_webfont_fields'), 99, 3);
 		add_filter('dilaz_mb_sanitize_field_webfont_hook', array($this, 'sanitize_webfont_field'), 99, 2);
-	
 	}
 	
 	
@@ -61,11 +62,23 @@ class DilazMetaboxFonts {
 	 * @since 2.0
 	 */
 	public function constants() {
-		
-		# Set constant path to the plugin directory
 		define('DILAZ_MB_FONTS_DIR', trailingslashit(plugin_dir_path(__FILE__)));
 		define('DILAZ_MB_FONTS_URL', trailingslashit(plugin_dir_url(__FILE__)));
+	}
 	
+	
+	/**
+	 * Prefixes for the target metaboxes
+	 *
+	 * @since 2.1
+	 */
+	public function prefixes() {
+		
+		# target metabox options prefixes as array
+		$prefixes = apply_filters('dilaz_metabox_fonts_target_prefix', $prefixes = []);
+		
+		# prepare all the prefixes
+		$this->prefixes = array_map('DilazMetaboxFunction::preparePrefix', $prefixes);
 	}
 	
 	
@@ -77,11 +90,11 @@ class DilazMetaboxFonts {
 	 *
 	 * @return array
 	 */
-	function enqueue_scripts($prefix, $dilaz_meta_boxes) {
+	function enqueue_scripts($prefix, $dilaz_meta_boxes, $parameters) {
 		
-		if (isset($this->prefix) and in_array($prefix, $this->prefix)) {
-
-			$meta_box_class = new Dilaz_Meta_Box($prefix, $dilaz_meta_boxes);
+		if (isset($this->prefixes) and in_array($prefix, $this->prefixes)) {
+			
+			$meta_box_class = new Dilaz_Meta_Box($prefix, $dilaz_meta_boxes, $parameters);
 			
 			# Webfont styles
 			if ($meta_box_class->has_field('webfont')) {
@@ -326,10 +339,10 @@ class DilazMetaboxFonts {
 	 *
 	 * @return array
 	 */
-	function insert_webfont_fields($dilaz_meta_boxes, $prefix) {
+	function insert_webfont_fields($dilaz_meta_boxes, $prefix, $parameters) {
 		
 		# insert only in required metabox options
-		if (!in_array($prefix, $this->prefix)) return;
+		if (!in_array($prefix, $this->prefixes)) return $dilaz_meta_boxes;
 		
 		# array data to be inserted
 		$dilaz_font_metaboxes = [];
@@ -475,9 +488,9 @@ class DilazMetaboxFonts {
 				'args'    => array('fonts' => array('linea-weather')),
 			);
 		
-		$new = DilazMetaboxFunction::insert_field($dilaz_meta_boxes, $prefix .'box-simple-fields', $prefix .'conditionals', $dilaz_font_metaboxes, 'last');
+		$insert = DilazMetaboxFunction::insert_field($dilaz_meta_boxes, $prefix .'box-simple-fields', $prefix .'conditionals', $dilaz_font_metaboxes, 'last');
 		
-		return ($new != false) ? array_merge($dilaz_meta_boxes, $new) : $dilaz_meta_boxes;
+		return ($insert != false) ? array_merge($dilaz_meta_boxes, $insert) : $dilaz_meta_boxes;
 	}
 
 

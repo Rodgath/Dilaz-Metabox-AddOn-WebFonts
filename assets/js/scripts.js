@@ -3,12 +3,12 @@
 || WebFonts JS
 || --------------------------------------------------------------------------------------------
 ||
-|| @package		Dilaz Metaboxes
+|| @package		Dilaz Metabox
 || @subpackage	Metabox WebFonts
-|| @since		Dilaz Metaboxes 1.0
+|| @since		Dilaz Metabox 2.0
 || @author		WebDilaz Team, http://webdilaz.com, http://themedilaz.com
 || @copyright	Copyright (C) 2017, WebDilaz LTD
-|| @link		http://webdilaz.com/metaboxes
+|| @link		http://webdilaz.com/metabox
 || @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 || 
 */
