@@ -1,13 +1,13 @@
 <?php
 /*
- * Plugin Name: Dilaz Metabox Fonts
- * Plugin URI:  http://webdilaz.com/addons/dilaz-metabox-fonts/
- * Description: Webfonts for Dilaz Metabox plugin. Icons by Fontawesome, MaterialDesign, Foundation and Linea.
- * Author:      WebDilaz Team
- * Version:     1.2
- * Author URI:  http://webdilaz.com/
- * License:     GPL-2.0+
- * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * Plugin Name:	Dilaz Metabox Fonts
+ * Plugin URI:	http://webdilaz.com/addons/dilaz-metabox-fonts/
+ * Description:	Webfonts for Dilaz Metabox plugin. Icons by Fontawesome, MaterialDesign, Foundation and Linea.
+ * Author:		WebDilaz Team
+ * Version:		1.3
+ * Author URI:	http://webdilaz.com/
+ * License:		GPL-2.0+
+ * License URI:	http://www.gnu.org/licenses/gpl-2.0.txt
 */
 
 defined('ABSPATH') || exit;
@@ -22,7 +22,7 @@ class DilazMetaboxFonts {
 	 * Metabox prefix
 	 *
 	 * @var string
-	 * @since 2.0
+	 * @since 1.1
 	 */
 	protected $prefixes;
 	
@@ -30,7 +30,7 @@ class DilazMetaboxFonts {
 	/**
 	 * Contructor method
 	 *
-	 * @since 2.0
+	 * @since 1.1
 	 */
 	function __construct() {
 		
@@ -42,10 +42,11 @@ class DilazMetaboxFonts {
 	/**
 	 * Initialization
 	 *
-	 * @since 2.0
+	 * @since 1.1
 	 */
 	public function webfont_init() {
 		
+		if (!$this->check_dilaz_metabox()) return;
 		$this->constants();
 		$this->prefixes();
 		
@@ -57,9 +58,33 @@ class DilazMetaboxFonts {
 	
 	
 	/**
+	 * Check DilazMetabox plugin
+	 *
+	 * @since 1.3
+	 */
+	public function check_dilaz_metabox() {
+		
+		if (!is_plugin_active('dilaz-metabox/dilaz-metabox.php')) {
+			add_action('admin_notices', function() {
+				$plugins = get_plugins();
+				if (isset($plugins['dilaz-metabox/dilaz-metabox.php'])) {
+					echo '<div id="message" class="error"><p><strong>'. __('Please activate <em>Dilaz Metabox</em> plugin. It is required by "<em>Dilaz Metabox Fonts</em>" plugin.', 'dilaz-mb-fonts') .'</strong></p></div>';
+				} else {
+					echo '<div id="message" class="error"><p><strong>'. __('Please install <em>Dilaz Metabox</em> plugin. It is required by "<em>Dilaz Metabox Fonts</em>" plugin.', 'dilaz-mb-fonts') .'</strong></p></div>';
+				}
+			});
+			
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	/**
 	 * Constants
 	 *
-	 * @since 2.0
+	 * @since 1.1
 	 */
 	public function constants() {
 		define('DILAZ_MB_FONTS_DIR', trailingslashit(plugin_dir_path(__FILE__)));
@@ -70,12 +95,12 @@ class DilazMetaboxFonts {
 	/**
 	 * Prefixes for the target metaboxes
 	 *
-	 * @since 2.1
+	 * @since 1.3
 	 */
 	public function prefixes() {
 		
 		# target metabox options prefixes as array
-		$prefixes = apply_filters('dilaz_metabox_fonts_target_prefix', $prefixes = []);
+		$prefixes = apply_filters('dilaz_metabox_fonts_target_prefix', $prefixes = ['dilaz_mb_prefix']);
 		
 		# prepare all the prefixes
 		$this->prefixes = array_map('DilazMetaboxFunction::preparePrefix', $prefixes);
@@ -97,32 +122,32 @@ class DilazMetaboxFonts {
 			$meta_box_class = new Dilaz_Meta_Box($prefix, $dilaz_meta_boxes, $parameters);
 			
 			# Webfont styles
-			if ($meta_box_class->has_field('webfont')) {
-				if ($meta_box_class->has_field_arg('fonts', 'materialdesign'))
+			if ($meta_box_class->hasField('webfont')) {
+				if ($meta_box_class->hasFieldArg('fonts', 'materialdesign'))
 					wp_enqueue_style('mdi', DILAZ_MB_FONTS_URL .'assets/css/materialdesignicons.css', false, '1.1');
 				
-				if ($meta_box_class->has_field_arg('fonts', 'foundation'))
+				if ($meta_box_class->hasFieldArg('fonts', 'foundation'))
 					wp_enqueue_style('fi', DILAZ_MB_FONTS_URL .'assets/css/foundation-icons.css', false, '3.0');
 				
-				if ($meta_box_class->has_field_arg('fonts', 'linea-arrows'))
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-arrows'))
 					wp_enqueue_style('linea-arrows', DILAZ_MB_FONTS_URL .'assets/css/linea-arrows-icons.css', false, '1.0');
 				
-				if ($meta_box_class->has_field_arg('fonts', 'linea-basic'))
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-basic'))
 					wp_enqueue_style('linea-basic', DILAZ_MB_FONTS_URL .'assets/css/linea-basic-icons.css', false, '1.0');
 				
-				if ($meta_box_class->has_field_arg('fonts', 'linea-basic-elaboration'))
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-basic-elaboration'))
 					wp_enqueue_style('linea-basic-elaboration', DILAZ_MB_FONTS_URL .'assets/css/linea-basic-elaboration-icons.css', false, '1.0');
 				
-				if ($meta_box_class->has_field_arg('fonts', 'linea-ecommerce'))
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-ecommerce'))
 					wp_enqueue_style('linea-ecommerce', DILAZ_MB_FONTS_URL .'assets/css/linea-ecommerce-icons.css', false, '1.0');
 				
-				if ($meta_box_class->has_field_arg('fonts', 'linea-music'))
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-music'))
 					wp_enqueue_style('linea-music', DILAZ_MB_FONTS_URL .'assets/css/linea-music-icons.css', false, '1.0');
 				
-				if ($meta_box_class->has_field_arg('fonts', 'linea-software'))
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-software'))
 					wp_enqueue_style('linea-software', DILAZ_MB_FONTS_URL .'assets/css/linea-software-icons.css', false, '1.0');
 				
-				if ($meta_box_class->has_field_arg('fonts', 'linea-weather'))
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-weather'))
 					wp_enqueue_style('linea-weather', DILAZ_MB_FONTS_URL .'assets/css/linea-weather-icons.css', false, '1.0');
 				
 				wp_enqueue_style('dilaz-mb-webfont-style', DILAZ_MB_FONTS_URL .'assets/css/style.css', false, '1.0');
