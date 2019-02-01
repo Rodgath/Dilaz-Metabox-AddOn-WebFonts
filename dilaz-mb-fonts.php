@@ -4,7 +4,7 @@
  * Plugin URI:	http://webdilaz.com/addons/dilaz-metabox-fonts/
  * Description:	Webfonts for Dilaz Metabox plugin. Icons by Fontawesome, MaterialDesign, Foundation and Linea.
  * Author:		WebDilaz Team
- * Version:		1.3
+ * Version:		1.3.1
  * Author URI:	http://webdilaz.com/
  * License:		GPL-2.0+
  * License URI:	http://www.gnu.org/licenses/gpl-2.0.txt
@@ -123,36 +123,56 @@ class DilazMetaboxFonts {
 			
 			# Webfont styles
 			if ($meta_box_class->hasField('webfont')) {
-				if ($meta_box_class->hasFieldArg('fonts', 'materialdesign'))
-					wp_enqueue_style('mdi', DILAZ_MB_FONTS_URL .'assets/css/materialdesignicons.css', false, '1.1');
+				if ($meta_box_class->hasFieldArg('fonts', 'fontawesome')) {
+					$fa_css_ver = date('ymd-Gis', filemtime( DILAZ_MB_FONTS_DIR .'assets/css/font-awesome.css' ));
+					wp_enqueue_style('fa', DILAZ_MB_FONTS_URL .'assets/css/font-awesome.css', false, $fa_css_ver);
+				}
 				
-				if ($meta_box_class->hasFieldArg('fonts', 'foundation'))
-					wp_enqueue_style('fi', DILAZ_MB_FONTS_URL .'assets/css/foundation-icons.css', false, '3.0');
+				if ($meta_box_class->hasFieldArg('fonts', 'foundation')) {
+					$fi_css_ver = date('ymd-Gis', filemtime( DILAZ_MB_FONTS_DIR .'assets/css/foundation-icons.css' ));
+					wp_enqueue_style('fi', DILAZ_MB_FONTS_URL .'assets/css/foundation-icons.css', false, $fi_css_ver);
+				}
 				
-				if ($meta_box_class->hasFieldArg('fonts', 'linea-arrows'))
-					wp_enqueue_style('linea-arrows', DILAZ_MB_FONTS_URL .'assets/css/linea-arrows-icons.css', false, '1.0');
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-arrows')) {
+					$linea_arrows_css_ver = date('ymd-Gis', filemtime( DILAZ_MB_FONTS_DIR .'assets/css/linea-arrows-icons.css' ));
+					wp_enqueue_style('linea-arrows', DILAZ_MB_FONTS_URL .'assets/css/linea-arrows-icons.css', false, $linea_arrows_css_ver);
+				}
 				
-				if ($meta_box_class->hasFieldArg('fonts', 'linea-basic'))
-					wp_enqueue_style('linea-basic', DILAZ_MB_FONTS_URL .'assets/css/linea-basic-icons.css', false, '1.0');
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-basic')) {
+					$linea_basic_css_ver = date('ymd-Gis', filemtime( DILAZ_MB_FONTS_DIR .'assets/css/linea-basic-icons.css' ));
+					wp_enqueue_style('linea-basic', DILAZ_MB_FONTS_URL .'assets/css/linea-basic-icons.css', false, $linea_basic_css_ver);
+				}
 				
-				if ($meta_box_class->hasFieldArg('fonts', 'linea-basic-elaboration'))
-					wp_enqueue_style('linea-basic-elaboration', DILAZ_MB_FONTS_URL .'assets/css/linea-basic-elaboration-icons.css', false, '1.0');
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-basic-elaboration')) {
+					$linea_basic_elaboration_css_ver = date('ymd-Gis', filemtime( DILAZ_MB_FONTS_DIR .'assets/css/linea-basic-elaboration-icons.css' ));
+					wp_enqueue_style('linea-basic-elaboration', DILAZ_MB_FONTS_URL .'assets/css/linea-basic-elaboration-icons.css', false, $linea_basic_elaboration_css_ver);
+				}
 				
-				if ($meta_box_class->hasFieldArg('fonts', 'linea-ecommerce'))
-					wp_enqueue_style('linea-ecommerce', DILAZ_MB_FONTS_URL .'assets/css/linea-ecommerce-icons.css', false, '1.0');
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-ecommerce')) {
+					$linea_ecommerce_css_ver = date('ymd-Gis', filemtime( DILAZ_MB_FONTS_DIR .'assets/css/linea-ecommerce-icons.css' ));
+					wp_enqueue_style('linea-ecommerce', DILAZ_MB_FONTS_URL .'assets/css/linea-ecommerce-icons.css', false, $linea_ecommerce_css_ver);
+				}
 				
-				if ($meta_box_class->hasFieldArg('fonts', 'linea-music'))
-					wp_enqueue_style('linea-music', DILAZ_MB_FONTS_URL .'assets/css/linea-music-icons.css', false, '1.0');
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-music')) {
+					$linea_music_css_ver = date('ymd-Gis', filemtime( DILAZ_MB_FONTS_DIR .'assets/css/linea-music-icons.css' ));
+					wp_enqueue_style('linea-music', DILAZ_MB_FONTS_URL .'assets/css/linea-music-icons.css', false, $linea_music_css_ver);
+				}
 				
-				if ($meta_box_class->hasFieldArg('fonts', 'linea-software'))
-					wp_enqueue_style('linea-software', DILAZ_MB_FONTS_URL .'assets/css/linea-software-icons.css', false, '1.0');
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-software')) {
+					$linea_software_css_ver = date('ymd-Gis', filemtime( DILAZ_MB_FONTS_DIR .'assets/css/linea-software-icons.css' ));
+					wp_enqueue_style('linea-software', DILAZ_MB_FONTS_URL .'assets/css/linea-software-icons.css', false, $linea_software_css_ver);
+				}
 				
-				if ($meta_box_class->hasFieldArg('fonts', 'linea-weather'))
-					wp_enqueue_style('linea-weather', DILAZ_MB_FONTS_URL .'assets/css/linea-weather-icons.css', false, '1.0');
+				if ($meta_box_class->hasFieldArg('fonts', 'linea-weather')) {
+					$linea_weather_css_ver = date('ymd-Gis', filemtime( DILAZ_MB_FONTS_DIR .'assets/css/linea-weather-icons.css' ));
+					wp_enqueue_style('linea-weather', DILAZ_MB_FONTS_URL .'assets/css/linea-weather-icons.css', false, $linea_weather_css_ver);
+				}
 				
-				wp_enqueue_style('dilaz-mb-webfont-style', DILAZ_MB_FONTS_URL .'assets/css/style.css', false, '1.0');
+				$dilaz_mb_webfont_style_css_ver = date('ymd-Gis', filemtime( DILAZ_MB_FONTS_DIR .'assets/css/style.css' ));
+				wp_enqueue_style('dilaz-mb-webfont-style', DILAZ_MB_FONTS_URL .'assets/css/style.css', false, $dilaz_mb_webfont_style_css_ver);
 				
-				wp_enqueue_script('dilaz-mb-webfont-script', DILAZ_MB_FONTS_URL .'assets/js/scripts.js', array('dilaz-mb-script'), '', true);
+				$dilaz_mb_webfont_script_js_ver = date('ymd-Gis', filemtime( DILAZ_MB_FONTS_DIR .'assets/js/scripts.js' ));
+				wp_enqueue_script('dilaz-mb-webfont-script', DILAZ_MB_FONTS_URL .'assets/js/scripts.js', array('dilaz-mb-script'), $dilaz_mb_webfont_script_js_ver, true);
 			}
 		}
 	}
@@ -377,7 +397,7 @@ class DilazMetaboxFonts {
 		$dilaz_font_metaboxes[] = array(
 			'id'    => $prefix .'webfonts',
 			'title' => __('Webfonts', 'dilaz-mb-fonts'),
-			'icon'  => 'fa-font',
+			'icon'  => 'mdi-format-font',
 			'type'  => 'metabox_tab'
 		);
 			
