@@ -1,11 +1,11 @@
 <?php
 /*
  * Plugin Name:	Dilaz Metabox Fonts
- * Plugin URI:	http://webdilaz.com/addons/dilaz-metabox-fonts/
+ * Plugin URI:	https://github.com/Rodgath/dilaz-metabox-fonts/
  * Description:	Webfonts for Dilaz Metabox plugin. Icons by Fontawesome, MaterialDesign, Foundation and Linea.
- * Author:		WebDilaz Team
+ * Author:		Rodgath
  * Version:		1.3.1
- * Author URI:	http://webdilaz.com/
+ * Author URI:	https://github.com/Rodgath
  * License:		GPL-2.0+
  * License URI:	http://www.gnu.org/licenses/gpl-2.0.txt
 */
@@ -63,7 +63,7 @@ class DilazMetaboxFonts {
 	 * @since 1.3
 	 */
 	public function check_dilaz_metabox() {
-		
+		if (!function_exists('is_plugin_active')) include_once ABSPATH . 'wp-admin/includes/plugin.php';
 		if (!is_plugin_active('dilaz-metabox/dilaz-metabox.php')) {
 			add_action('admin_notices', function() {
 				$plugins = get_plugins();
