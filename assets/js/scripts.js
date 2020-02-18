@@ -23,8 +23,8 @@ jQuery(document).ready(function($) {
 			e.preventDefault();
 			
 			var $this      = $(this),
-				$faIcons   = $this.parents('.dilaz-mb-webfont-icons');
-				$container = $this.parents('.webfont-container');
+				$faIcons   = $this.parents('.dilaz-mb-webfont-icons'),
+				$container = $this.parents('.webfont-container'),
 				$fontName  = $this.data('name');
 				
 			if ($this.hasClass('active')) {
