@@ -2,6 +2,11 @@
 
 ## Version 1
 
+###### v1.3.2
+```
+= FIXED - Webfonts search
+= UPDATED - Material design icons to v6.5.95
+```
 ###### v1.3.1
 ```
 = REMOVED - Font Awesome webfont icons for tab icons
