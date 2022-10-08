@@ -335,7 +335,7 @@ class DilazMetaboxFonts {
 	 *
 	 * @return mixed
 	 */
-	function webfont_field($field) {
+	function webfont_field($field = array()) {
 		
 		global $post;
 		
