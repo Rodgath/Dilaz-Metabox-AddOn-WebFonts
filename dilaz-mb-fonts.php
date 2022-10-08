@@ -19,12 +19,12 @@ class DilazMetaboxFonts {
 	
 	
 	/**
-	 * Metabox prefix
+	 * Metabox prefixes
 	 *
-	 * @var string
+	 * @var array
 	 * @since 1.1
 	 */
-	protected $prefixes;
+	protected $prefixes = [];
 	
 	
 	/**
