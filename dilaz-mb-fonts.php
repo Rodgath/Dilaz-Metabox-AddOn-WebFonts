@@ -282,7 +282,7 @@ class DilazMetaboxFonts {
 			# continue if font file does not exist
 			if (!file_exists(DILAZ_MB_FONTS_DIR .'assets/css/'. $font_file .'')) continue;
 			
-			$pattern = '/\.('. $font_prefix .'(?:\w+(?:-)?)+):before\s+{\s*content:\s*"(.+)";\s+}/';
+			$pattern = '/\.('. $font_prefix .'(?:\w+(?:-)?)+)::before\s+{\s*content:\s*"(.+)";\s+}/';
 			$subject = file_get_contents(DILAZ_MB_FONTS_URL .'assets/css/'. $font_file .'');
 			
 			preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);
