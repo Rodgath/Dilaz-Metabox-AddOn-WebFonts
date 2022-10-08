@@ -12,7 +12,7 @@
 
 }
 
-[data-icon-ecommerce]:before {
+[data-icon-ecommerce]::before {
   font-family: "linea-ecommerce-10" !important;
   content: attr(data-icon);
   font-style: normal !important;
@@ -25,8 +25,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-ecommerce:before,
-.icon-ecommerce:before {
+.icon-ecommerce::before,
+.icon-ecommerce::before {
   font-family: "linea-ecommerce-10" !important;
   font-style: normal !important;
   font-weight: normal !important;
@@ -38,258 +38,258 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-ecommerce-bag:before {
+.icon-ecommerce-bag::before {
   content: "a";
 }
-.icon-ecommerce-bag-check:before {
+.icon-ecommerce-bag-check::before {
   content: "b";
 }
-.icon-ecommerce-bag-cloud:before {
+.icon-ecommerce-bag-cloud::before {
   content: "c";
 }
-.icon-ecommerce-bag-download:before {
+.icon-ecommerce-bag-download::before {
   content: "d";
 }
-.icon-ecommerce-bag-minus:before {
+.icon-ecommerce-bag-minus::before {
   content: "e";
 }
-.icon-ecommerce-bag-plus:before {
+.icon-ecommerce-bag-plus::before {
   content: "f";
 }
-.icon-ecommerce-bag-refresh:before {
+.icon-ecommerce-bag-refresh::before {
   content: "g";
 }
-.icon-ecommerce-bag-remove:before {
+.icon-ecommerce-bag-remove::before {
   content: "h";
 }
-.icon-ecommerce-bag-search:before {
+.icon-ecommerce-bag-search::before {
   content: "i";
 }
-.icon-ecommerce-bag-upload:before {
+.icon-ecommerce-bag-upload::before {
   content: "j";
 }
-.icon-ecommerce-banknote:before {
+.icon-ecommerce-banknote::before {
   content: "k";
 }
-.icon-ecommerce-banknotes:before {
+.icon-ecommerce-banknotes::before {
   content: "l";
 }
-.icon-ecommerce-basket:before {
+.icon-ecommerce-basket::before {
   content: "m";
 }
-.icon-ecommerce-basket-check:before {
+.icon-ecommerce-basket-check::before {
   content: "n";
 }
-.icon-ecommerce-basket-cloud:before {
+.icon-ecommerce-basket-cloud::before {
   content: "o";
 }
-.icon-ecommerce-basket-download:before {
+.icon-ecommerce-basket-download::before {
   content: "p";
 }
-.icon-ecommerce-basket-minus:before {
+.icon-ecommerce-basket-minus::before {
   content: "q";
 }
-.icon-ecommerce-basket-plus:before {
+.icon-ecommerce-basket-plus::before {
   content: "r";
 }
-.icon-ecommerce-basket-refresh:before {
+.icon-ecommerce-basket-refresh::before {
   content: "s";
 }
-.icon-ecommerce-basket-remove:before {
+.icon-ecommerce-basket-remove::before {
   content: "t";
 }
-.icon-ecommerce-basket-search:before {
+.icon-ecommerce-basket-search::before {
   content: "u";
 }
-.icon-ecommerce-basket-upload:before {
+.icon-ecommerce-basket-upload::before {
   content: "v";
 }
-.icon-ecommerce-bath:before {
+.icon-ecommerce-bath::before {
   content: "w";
 }
-.icon-ecommerce-cart:before {
+.icon-ecommerce-cart::before {
   content: "x";
 }
-.icon-ecommerce-cart-check:before {
+.icon-ecommerce-cart-check::before {
   content: "y";
 }
-.icon-ecommerce-cart-cloud:before {
+.icon-ecommerce-cart-cloud::before {
   content: "z";
 }
-.icon-ecommerce-cart-content:before {
+.icon-ecommerce-cart-content::before {
   content: "A";
 }
-.icon-ecommerce-cart-download:before {
+.icon-ecommerce-cart-download::before {
   content: "B";
 }
-.icon-ecommerce-cart-minus:before {
+.icon-ecommerce-cart-minus::before {
   content: "C";
 }
-.icon-ecommerce-cart-plus:before {
+.icon-ecommerce-cart-plus::before {
   content: "D";
 }
-.icon-ecommerce-cart-refresh:before {
+.icon-ecommerce-cart-refresh::before {
   content: "E";
 }
-.icon-ecommerce-cart-remove:before {
+.icon-ecommerce-cart-remove::before {
   content: "F";
 }
-.icon-ecommerce-cart-search:before {
+.icon-ecommerce-cart-search::before {
   content: "G";
 }
-.icon-ecommerce-cart-upload:before {
+.icon-ecommerce-cart-upload::before {
   content: "H";
 }
-.icon-ecommerce-cent:before {
+.icon-ecommerce-cent::before {
   content: "I";
 }
-.icon-ecommerce-colon:before {
+.icon-ecommerce-colon::before {
   content: "J";
 }
-.icon-ecommerce-creditcard:before {
+.icon-ecommerce-creditcard::before {
   content: "K";
 }
-.icon-ecommerce-diamond:before {
+.icon-ecommerce-diamond::before {
   content: "L";
 }
-.icon-ecommerce-dollar:before {
+.icon-ecommerce-dollar::before {
   content: "M";
 }
-.icon-ecommerce-euro:before {
+.icon-ecommerce-euro::before {
   content: "N";
 }
-.icon-ecommerce-franc:before {
+.icon-ecommerce-franc::before {
   content: "O";
 }
-.icon-ecommerce-gift:before {
+.icon-ecommerce-gift::before {
   content: "P";
 }
-.icon-ecommerce-graph1:before {
+.icon-ecommerce-graph1::before {
   content: "Q";
 }
-.icon-ecommerce-graph2:before {
+.icon-ecommerce-graph2::before {
   content: "R";
 }
-.icon-ecommerce-graph3:before {
+.icon-ecommerce-graph3::before {
   content: "S";
 }
-.icon-ecommerce-graph-decrease:before {
+.icon-ecommerce-graph-decrease::before {
   content: "T";
 }
-.icon-ecommerce-graph-increase:before {
+.icon-ecommerce-graph-increase::before {
   content: "U";
 }
-.icon-ecommerce-guarani:before {
+.icon-ecommerce-guarani::before {
   content: "V";
 }
-.icon-ecommerce-kips:before {
+.icon-ecommerce-kips::before {
   content: "W";
 }
-.icon-ecommerce-lira:before {
+.icon-ecommerce-lira::before {
   content: "X";
 }
-.icon-ecommerce-megaphone:before {
+.icon-ecommerce-megaphone::before {
   content: "Y";
 }
-.icon-ecommerce-money:before {
+.icon-ecommerce-money::before {
   content: "Z";
 }
-.icon-ecommerce-naira:before {
+.icon-ecommerce-naira::before {
   content: "0";
 }
-.icon-ecommerce-pesos:before {
+.icon-ecommerce-pesos::before {
   content: "1";
 }
-.icon-ecommerce-pound:before {
+.icon-ecommerce-pound::before {
   content: "2";
 }
-.icon-ecommerce-receipt:before {
+.icon-ecommerce-receipt::before {
   content: "3";
 }
-.icon-ecommerce-receipt-bath:before {
+.icon-ecommerce-receipt-bath::before {
   content: "4";
 }
-.icon-ecommerce-receipt-cent:before {
+.icon-ecommerce-receipt-cent::before {
   content: "5";
 }
-.icon-ecommerce-receipt-dollar:before {
+.icon-ecommerce-receipt-dollar::before {
   content: "6";
 }
-.icon-ecommerce-receipt-euro:before {
+.icon-ecommerce-receipt-euro::before {
   content: "7";
 }
-.icon-ecommerce-receipt-franc:before {
+.icon-ecommerce-receipt-franc::before {
   content: "8";
 }
-.icon-ecommerce-receipt-guarani:before {
+.icon-ecommerce-receipt-guarani::before {
   content: "9";
 }
-.icon-ecommerce-receipt-kips:before {
+.icon-ecommerce-receipt-kips::before {
   content: "!";
 }
-.icon-ecommerce-receipt-lira:before {
+.icon-ecommerce-receipt-lira::before {
   content: "\"";
 }
-.icon-ecommerce-receipt-naira:before {
+.icon-ecommerce-receipt-naira::before {
   content: "#";
 }
-.icon-ecommerce-receipt-pesos:before {
+.icon-ecommerce-receipt-pesos::before {
   content: "$";
 }
-.icon-ecommerce-receipt-pound:before {
+.icon-ecommerce-receipt-pound::before {
   content: "%";
 }
-.icon-ecommerce-receipt-rublo:before {
+.icon-ecommerce-receipt-rublo::before {
   content: "&";
 }
-.icon-ecommerce-receipt-rupee:before {
+.icon-ecommerce-receipt-rupee::before {
   content: "'";
 }
-.icon-ecommerce-receipt-tugrik:before {
+.icon-ecommerce-receipt-tugrik::before {
   content: "(";
 }
-.icon-ecommerce-receipt-won:before {
+.icon-ecommerce-receipt-won::before {
   content: ")";
 }
-.icon-ecommerce-receipt-yen:before {
+.icon-ecommerce-receipt-yen::before {
   content: "*";
 }
-.icon-ecommerce-receipt-yen2:before {
+.icon-ecommerce-receipt-yen2::before {
   content: "+";
 }
-.icon-ecommerce-recept-colon:before {
+.icon-ecommerce-recept-colon::before {
   content: ",";
 }
-.icon-ecommerce-rublo:before {
+.icon-ecommerce-rublo::before {
   content: "-";
 }
-.icon-ecommerce-rupee:before {
+.icon-ecommerce-rupee::before {
   content: ".";
 }
-.icon-ecommerce-safe:before {
+.icon-ecommerce-safe::before {
   content: "/";
 }
-.icon-ecommerce-sale:before {
+.icon-ecommerce-sale::before {
   content: ":";
 }
-.icon-ecommerce-sales:before {
+.icon-ecommerce-sales::before {
   content: ";";
 }
-.icon-ecommerce-ticket:before {
+.icon-ecommerce-ticket::before {
   content: "<";
 }
-.icon-ecommerce-tugriks:before {
+.icon-ecommerce-tugriks::before {
   content: "=";
 }
-.icon-ecommerce-wallet:before {
+.icon-ecommerce-wallet::before {
   content: ">";
 }
-.icon-ecommerce-won:before {
+.icon-ecommerce-won::before {
   content: "?";
 }
-.icon-ecommerce-yen:before {
+.icon-ecommerce-yen::before {
   content: "@";
 }
-.icon-ecommerce-yen2:before {
+.icon-ecommerce-yen2::before {
   content: "[";
 }

@@ -12,7 +12,7 @@
 
 }
 
-[data-icon-music]:before {
+[data-icon-music]::before {
   font-family: "linea-music-10" !important;
   content: attr(data-icon);
   font-style: normal !important;
@@ -25,8 +25,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-music:before,
-.icon-music:before {
+.icon-music::before,
+.icon-music::before {
   font-family: "linea-music-10" !important;
   font-style: normal !important;
   font-weight: normal !important;
@@ -38,93 +38,93 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-music-beginning-button:before {
+.icon-music-beginning-button::before {
   content: "a";
 }
-.icon-music-bell:before {
+.icon-music-bell::before {
   content: "b";
 }
-.icon-music-cd:before {
+.icon-music-cd::before {
   content: "c";
 }
-.icon-music-diapason:before {
+.icon-music-diapason::before {
   content: "d";
 }
-.icon-music-eject-button:before {
+.icon-music-eject-button::before {
   content: "e";
 }
-.icon-music-end-button:before {
+.icon-music-end-button::before {
   content: "f";
 }
-.icon-music-fastforward-button:before {
+.icon-music-fastforward-button::before {
   content: "g";
 }
-.icon-music-headphones:before {
+.icon-music-headphones::before {
   content: "h";
 }
-.icon-music-ipod:before {
+.icon-music-ipod::before {
   content: "i";
 }
-.icon-music-loudspeaker:before {
+.icon-music-loudspeaker::before {
   content: "j";
 }
-.icon-music-microphone:before {
+.icon-music-microphone::before {
   content: "k";
 }
-.icon-music-microphone-old:before {
+.icon-music-microphone-old::before {
   content: "l";
 }
-.icon-music-mixer:before {
+.icon-music-mixer::before {
   content: "m";
 }
-.icon-music-mute:before {
+.icon-music-mute::before {
   content: "n";
 }
-.icon-music-note-multiple:before {
+.icon-music-note-multiple::before {
   content: "o";
 }
-.icon-music-note-single:before {
+.icon-music-note-single::before {
   content: "p";
 }
-.icon-music-pause-button:before {
+.icon-music-pause-button::before {
   content: "q";
 }
-.icon-music-play-button:before {
+.icon-music-play-button::before {
   content: "r";
 }
-.icon-music-playlist:before {
+.icon-music-playlist::before {
   content: "s";
 }
-.icon-music-radio-ghettoblaster:before {
+.icon-music-radio-ghettoblaster::before {
   content: "t";
 }
-.icon-music-radio-portable:before {
+.icon-music-radio-portable::before {
   content: "u";
 }
-.icon-music-record:before {
+.icon-music-record::before {
   content: "v";
 }
-.icon-music-recordplayer:before {
+.icon-music-recordplayer::before {
   content: "w";
 }
-.icon-music-repeat-button:before {
+.icon-music-repeat-button::before {
   content: "x";
 }
-.icon-music-rewind-button:before {
+.icon-music-rewind-button::before {
   content: "y";
 }
-.icon-music-shuffle-button:before {
+.icon-music-shuffle-button::before {
   content: "z";
 }
-.icon-music-stop-button:before {
+.icon-music-stop-button::before {
   content: "A";
 }
-.icon-music-tape:before {
+.icon-music-tape::before {
   content: "B";
 }
-.icon-music-volume-down:before {
+.icon-music-volume-down::before {
   content: "C";
 }
-.icon-music-volume-up:before {
+.icon-music-volume-up::before {
   content: "D";
 }
