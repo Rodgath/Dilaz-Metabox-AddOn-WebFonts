@@ -4,7 +4,7 @@
  * Plugin URI:	https://github.com/Rodgath/dilaz-metabox-fonts/
  * Description:	Webfonts for Dilaz Metabox plugin. Icons by Fontawesome, MaterialDesign, Foundation and Linea.
  * Author:		Rodgath
- * Version:		1.3.1
+ * Version:		1.3.2
  * Author URI:	https://github.com/Rodgath
  * License:		GPL-2.0+
  * License URI:	http://www.gnu.org/licenses/gpl-2.0.txt
